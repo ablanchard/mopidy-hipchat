@@ -19,13 +19,14 @@ def send_webhook(config, payload):
     All exceptions are suppressed but emit a warning message in the log.
     """
     try:
+        logger.debug('will send {0}'.format(payload))
         response = requests.post(
             config['webhook_url'],
             data=json.dumps(payload, cls=ModelJSONEncoder),
-            headers={config['api_key_header_name']: config['api_key']},
+            headers={'Content-type': 'application/json'},
         )
     except Exception as e:
-        logger.warning('Unable to send webhook: ({1}) {2}'.format(
+        logger.warning('Unable to send webhook: ({0}) {1}'.format(
             e.__class__.__name__,
             e.message,
         ))

@@ -15,10 +15,10 @@ from .reporters import status
 logger = logging.getLogger(__name__)
 
 
-class WebhookFrontend(pykka.ThreadingActor):
+class HipchatFrontend(pykka.ThreadingActor):
 
     def __init__(self, config, core):
-        super(WebhookFrontend, self).__init__()
+        super(HipchatFrontend, self).__init__()
         self.config = config
         self.core = core
         self.event_reporter = None

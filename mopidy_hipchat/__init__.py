@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 class Extension(ext.Extension):
 
-    dist_name = 'Mopidy-Webhooks'
-    ext_name = 'webhooks'
+    dist_name = 'Mopidy-Hipchat'
+    ext_name = 'hipchat'
     version = __version__
 
     def get_default_config(self):
@@ -22,12 +22,10 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        schema['api_key'] = config.String()
-        schema['api_key_header_name'] = config.String()
         schema['status_update_interval'] = config.Integer()
         schema['webhook_url'] = config.String()
         return schema
 
     def setup(self, registry):
-        from .frontend import WebhookFrontend
-        registry.add('frontend', WebhookFrontend)
+        from .frontend import HipchatFrontend
+        registry.add('frontend', HipchatFrontend)

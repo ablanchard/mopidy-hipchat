@@ -2,14 +2,14 @@ from __future__ import unicode_literals
 
 import unittest
 
-from mopidy_webhooks import Extension
+from mopidy_hipchat import Extension
 
 
 class ExtensionTest(unittest.TestCase):
 
     def test_get_default_config(self):
         config = Extension().get_default_config()
-        self.assertIn('[webhooks]', config)
+        self.assertIn('[hipchat]', config)
         self.assertIn('enabled = true', config)
 
     def test_get_config_schema(self):

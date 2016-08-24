@@ -14,13 +14,13 @@ def get_version(filename):
 
 
 setup(
-    name='Mopidy-Webhooks',
-    version=get_version('mopidy_webhooks/__init__.py'),
-    url='https://github.com/paddycarey/mopidy-webhooks',
+    name='Mopidy-Hipchat',
+    version=get_version('mopidy_hipchat/__init__.py'),
+    url='https://github.com/ablanchard/mopidy-hipchat',
     license='Apache License, Version 2.0',
-    author='Patrick Carey',
-    author_email='paddy@wackwack.co.uk',
-    description='Mopidy extension that sends webhook notifications to a remote server',
+    author='Alexandre Blanchard',
+    author_email='alexandre.blanchard@laposte.net',
+    description='Mopidy extension that integrates with hipchat',
     long_description=open('README.rst').read(),
     packages=find_packages(exclude=['tests', 'tests.*']),
     zip_safe=False,
@@ -38,7 +38,7 @@ setup(
     ],
     entry_points={
         'mopidy.ext': [
-            'webhooks = mopidy_webhooks:Extension',
+            'hipchat= mopidy_hipchat:Extension',
         ],
     },
     classifiers=[

@@ -1,5 +1,5 @@
 ****************************
-Mopidy-Webhooks
+Mopidy-Hipchat
 ****************************
 
 .. image:: https://img.shields.io/pypi/v/Mopidy-Webhooks.svg?style=flat

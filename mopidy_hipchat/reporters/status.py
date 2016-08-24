@@ -23,7 +23,7 @@ class StatusReporter(pykka.ThreadingActor):
 
     def __init__(self, config, core):
         super(StatusReporter, self).__init__()
-        self.config = config['webhooks']
+        self.config = config['hipchat']
         self.core = core
         self.in_future = self.actor_ref.proxy()
 
@@ -56,5 +56,7 @@ class StatusReporter(pykka.ThreadingActor):
             'state': self.core.playback.state.get(),
             'time_position': self.core.playback.time_position.get(),
         }
-        send_webhook(self.config, {'status_report': current_status})
+        logger.debug('report {0}'.format(current_status))
+        send_webhook(self.config, {'color':'green','message': self.core.playback.current_track.get().artists[0].name, 'message_format':'text'})
+
         self.report_again(current_status)

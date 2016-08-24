@@ -20,7 +20,7 @@ class EventReporter(pykka.ThreadingActor, CoreListener):
 
     def __init__(self, config):
         super(EventReporter, self).__init__()
-        self.config = config['webhooks']
+        self.config = config['hipchat']
 
     def on_start(self):
         logger.info('EventReporter started.')

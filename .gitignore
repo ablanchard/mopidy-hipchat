@@ -8,3 +8,4 @@ build/
 dist/
 mopidy.conf
 xunit-py27.xml
+.idea/*

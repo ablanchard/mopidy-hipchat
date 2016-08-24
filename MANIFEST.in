@@ -3,6 +3,6 @@ include .travis.yml
 include LICENSE
 include MANIFEST.in
 include README.rst
-include mopidy_webhooks/ext.conf
+include mopidy_hipchat/ext.conf
 
 recursive-include tests *.py
