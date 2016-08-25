@@ -31,7 +31,7 @@ def send_webhook(config, payload):
             e.message,
         ))
     else:
-        logger.debug('Webhook response: ({0}) {1}'.format(
+        logger.info('Webhook response: ({0}) {1}'.format(
             response.status_code,
             response.text,
         ))

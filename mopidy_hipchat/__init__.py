@@ -22,7 +22,6 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        schema['status_update_interval'] = config.Integer()
         schema['webhook_url'] = config.String()
         return schema
 

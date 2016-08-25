@@ -24,6 +24,11 @@ class EventReporter(pykka.ThreadingActor, CoreListener):
 
     def on_start(self):
         logger.info('EventReporter started.')
+        send_webhook(self.config, {'color':'red','message': 'On air', 'message_format':'text', 'notify': 'true'})
 
-    def on_event(self, event, **kwargs):
-        send_webhook(self.config, {event: kwargs})
+    def track_playback_started(self, tl_track):
+        logger.info('Track started {0}'.format(tl_track))
+
+        current_track = tl_track.track
+        current_track = "None" if current_track is None else current_track.name + " - " + iter(current_track.artists).next().name
+        send_webhook(self.config, {'color':'green','message': current_track, 'message_format':'text'})
