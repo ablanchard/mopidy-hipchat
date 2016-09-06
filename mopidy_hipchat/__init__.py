@@ -22,7 +22,9 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        schema['webhook_url'] = config.String()
+        schema['hipchat_domain'] = config.String()
+        schema['hipchat_auth_token'] = config.String()
+        schema['room_id'] = config.String()
         return schema
 
     def setup(self, registry):
