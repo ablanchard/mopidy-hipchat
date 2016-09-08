@@ -24,7 +24,7 @@ class UserCommandController(pykka.ThreadingActor):
 
     def on_start(self):
         logger.info('UserCommandController started.')
-        self.monitor_messages()
+        #self.monitor_messages()
 
     def monitor_messages(self):
         latest = ''

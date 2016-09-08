@@ -9,19 +9,16 @@ import logging
 import pykka
 from mopidy.core import CoreListener
 
-# local imports
-from ..utils import HipchatConnector
-
 
 logger = logging.getLogger(__name__)
 
 
 class EventReporter(pykka.ThreadingActor, CoreListener):
 
-    def __init__(self, config):
+    def __init__(self, config, hipchat_connector):
         super(EventReporter, self).__init__()
         self.config = config['hipchat']
-        self.hipchatConnector = HipchatConnector(self.config)
+        self.hipchatConnector = hipchat_connector
 
     def on_start(self):
         logger.info('EventReporter started.')
