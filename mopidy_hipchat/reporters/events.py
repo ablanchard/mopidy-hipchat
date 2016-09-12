@@ -23,9 +23,6 @@ class EventReporter(pykka.ThreadingActor, CoreListener):
     def on_start(self):
         logger.info('EventReporter started.')
 
-        self.hipchatConnector.send_notification('On air','red',True)
-        #monitor_messages(self.config);
-
     def track_playback_started(self, tl_track):
         logger.info('Track started {0}'.format(tl_track))
 
