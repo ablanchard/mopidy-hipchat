@@ -10,9 +10,11 @@ import pykka
 
 # local imports
 from .reporters import events
-from . import utils
+from . import connector
 from . import lol
 from . import help
+from . import request
+from . import next
 
 logger = logging.getLogger(__name__)
 
@@ -25,9 +27,13 @@ class HipchatFrontend(pykka.ThreadingActor):
         self.core = core
         self.event_reporter = None
         self.user_command_controller = None
-        self.hipchat_connector =  utils.HipchatConnector(self.config['hipchat'])
+        self.hipchat_connector =  connector.HipchatConnector(self.config['hipchat'])
         self.help_listener = help.HelpListener()
+        self.request_listener = request.RequestListener(self.core)
+        self.next_listener = next.NextListener(self.core)
         self.hipchat_connector.register_to_command(self.help_listener)
+        self.hipchat_connector.register_to_command(self.request_listener)
+        self.hipchat_connector.register_to_command(self.next_listener)
 
     def on_start(self):
         self.hipchat_connector.on_start()

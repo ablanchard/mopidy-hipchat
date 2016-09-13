@@ -60,13 +60,13 @@ class HipchatConnector(sleekxmpp.ClientXMPP, pykka.ThreadingActor):
 
     def stop(self):
         logger.info('Stopping hipchat connector')
-        self._disconnect()
+        self.disconnect()
 
     def muc_message(self, msg):
         logger.info(msg)
         if msg['mucnick'] != self.nick:
             for listener in self.listeners:
-                if listener.command() in msg['body']:
+                if msg['body'].startswith(listener.command()):
                     self.send_message(mto=msg['from'].bare,
                                       mbody=listener.action(msg),
                                       mtype='groupchat')
