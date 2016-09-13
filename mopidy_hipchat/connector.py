@@ -36,7 +36,6 @@ class HipchatConnector(sleekxmpp.ClientXMPP, pykka.ThreadingActor):
         self.send_presence()
 
         self.plugin['xep_0045'].joinMUC(self.room,self.nick,maxhistory="1", wait=True)
-        self.send_notification('On air')
 
         logger.info(self.room)
         logger.info(self.nick)

@@ -30,7 +30,7 @@ class HipchatFrontend(pykka.ThreadingActor):
         self.user_command_controller = None
         self.hipchat_connector =  connector.HipchatConnector(self.config['hipchat'])
         self.help_listener = help.HelpListener()
-        self.request_listener = request.RequestListener(self.core)
+        self.request_listener = request.RequestListener(self.core, self.config['hipchat'])
         self.next_listener = next.NextListener(self.core)
         self.start_listener = start.StartListener(self.core, self.config['hipchat'])
         self.hipchat_connector.register_to_command(self.help_listener)

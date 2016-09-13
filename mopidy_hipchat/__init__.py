@@ -26,6 +26,7 @@ class Extension(ext.Extension):
         schema['password'] = config.String()
         schema['room_id'] = config.String()
         schema['default_playlist'] = config.String()
+        schema['backend_priority'] = config.String()
         return schema
 
     def setup(self, registry):

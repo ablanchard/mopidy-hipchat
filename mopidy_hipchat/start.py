@@ -27,6 +27,7 @@ class StartListener(CommandListener):
         self.core.tracklist.add(uri=uri)
         self.core.tracklist.shuffle()
         self.core.playback.play()
+        return 'On air'
 
     def find_default_playlist(self,playlists):
         for playlist in playlists:
