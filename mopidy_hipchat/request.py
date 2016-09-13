@@ -23,6 +23,7 @@ class RequestListener(CommandListener):
     def action(self, msg):
         query = {'any': msg['body'][8:].strip().split(' ')}
         results = self.core.library.search(query).get()
+        logger.info(str(results))
         logger.info('{} results matching query {} and uri {}'.format(len(results[0].tracks), query, results[0].uri))
         if len(results[0].tracks) <= 0:
             return 'Nothing match your query :('

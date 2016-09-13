@@ -15,6 +15,7 @@ from . import lol
 from . import help
 from . import request
 from . import next
+from . import start
 
 logger = logging.getLogger(__name__)
 
@@ -31,9 +32,11 @@ class HipchatFrontend(pykka.ThreadingActor):
         self.help_listener = help.HelpListener()
         self.request_listener = request.RequestListener(self.core)
         self.next_listener = next.NextListener(self.core)
+        self.start_listener = start.StartListener(self.core, self.config['hipchat'])
         self.hipchat_connector.register_to_command(self.help_listener)
         self.hipchat_connector.register_to_command(self.request_listener)
         self.hipchat_connector.register_to_command(self.next_listener)
+        self.hipchat_connector.register_to_command(self.start_listener)
 
     def on_start(self):
         self.hipchat_connector.on_start()
@@ -41,10 +44,12 @@ class HipchatFrontend(pykka.ThreadingActor):
 
     def _stop_children(self):
         self.event_reporter.stop()
-        self.hipchat_connector.stop()
+        self.hipchat_connector.on_stop()
 
     def on_stop(self):
+        logger.info('Stopping hipchat frontend')
         self._stop_children()
 
     def on_failure(self, exception_type, exception_value, traceback):
+        logger.info('Failure on frontend')
         self._stop_children()

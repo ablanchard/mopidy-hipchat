@@ -35,11 +35,15 @@ class HipchatConnector(sleekxmpp.ClientXMPP, pykka.ThreadingActor):
         self.get_roster()
         self.send_presence()
 
+        self.plugin['xep_0045'].joinMUC(self.room,self.nick,maxhistory="1", wait=True)
+        self.send_notification('On air')
+
         logger.info(self.room)
         logger.info(self.nick)
 
-        self.plugin['xep_0045'].joinMUC(self.room,self.nick,maxhistory="1", wait=True)
-        self.send_notification('On air')
+    def end_xmpp_session(self, event):
+        logger.info('disconnected')
+
 
 
     def on_start(self):
@@ -52,13 +56,14 @@ class HipchatConnector(sleekxmpp.ClientXMPP, pykka.ThreadingActor):
         self.register_plugin('xep_0199') # XMPP Ping
 
         self.add_event_handler('session_start', self.start_xmpp_session)
+        self.add_event_handler('session_end', self.end_xmpp_session)
         self.add_event_handler('message', self.message)
         self.add_event_handler("groupchat_message", self.muc_message)
         if self.connect():
-            self.process(block=True)
+            self.process(block=False)
             logger.info('Connected to hipchat')
 
-    def stop(self):
+    def on_stop(self):
         logger.info('Stopping hipchat connector')
         self.disconnect()
 

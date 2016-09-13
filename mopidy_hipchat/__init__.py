@@ -25,6 +25,7 @@ class Extension(ext.Extension):
         schema['jid'] = config.String()
         schema['password'] = config.String()
         schema['room_id'] = config.String()
+        schema['default_playlist'] = config.String()
         return schema
 
     def setup(self, registry):
