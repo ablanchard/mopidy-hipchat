@@ -29,6 +29,9 @@ class StartListener(CommandListener):
         self.core.playback.play()
         return 'On air'
 
+    def usage(self):
+        return '/start - Start the radio broadcast'
+
     def find_default_playlist(self,playlists):
         for playlist in playlists:
             if playlist.name == self.config['default_playlist']:

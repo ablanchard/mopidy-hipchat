@@ -26,3 +26,6 @@ class KeepListener(CommandListener):
     def action(self, msg):
         self.counter.add_keep(msg['mucnick'])
         return 'Currently {} nexts and {} keeps'.format(len(self.counter.nexts),len(self.counter.keeps))
+
+    def usage(self):
+        return '/keep - Ask to keep the current playing song'

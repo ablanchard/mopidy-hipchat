@@ -38,6 +38,9 @@ class RequestListener(CommandListener):
                                     at_position=current_track_position + 1)
             return '{} will be played next'.format(title_dash_artist(source.tracks[0]))
 
+    def usage(self):
+        return '/request song_name - Request a new song to be played'
+
     def find_best_source(self,sources):
         sources_by_uri = {}
         for source in sources:

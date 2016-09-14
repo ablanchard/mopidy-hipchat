@@ -9,3 +9,7 @@ class CommandListener():
     @abstractmethod
     def action(self, msg):
         pass
+
+    @abstractmethod
+    def usage(self):
+        pass

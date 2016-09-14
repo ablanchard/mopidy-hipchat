@@ -12,9 +12,17 @@ logger = logging.getLogger(__name__)
 
 class HelpListener(CommandListener):
 
+    def __init__(self, hipchat_connector):
+        self.hipchat_connector = hipchat_connector
+
     def command(self):
         return '/help'
 
     def action(self, msg):
-        return '/request song_name - Request a new song to be played\n' \
-                    '/help - Display this help'
+        usage =''
+        for listener in self.hipchat_connector.listeners:
+            usage += listener.usage() + '\n'
+        return usage
+
+    def usage(self):
+        return '/help - Display this help'

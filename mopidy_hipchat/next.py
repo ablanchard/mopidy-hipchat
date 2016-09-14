@@ -33,6 +33,9 @@ class NextListener(CommandListener):
         self.counter.add_next(msg['mucnick'])
         return 'Currently {} nexts and {} keeps'.format(len(self.counter.nexts),len(self.counter.keeps))
 
+    def usage(self):
+        return '/next - Ask to skip the current playing song'
+
     def change_song(self):
         if len(self.counter.nexts) > len(self.counter.keeps):
             self.core.playback.next()
