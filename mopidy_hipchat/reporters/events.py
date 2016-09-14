@@ -16,10 +16,11 @@ logger = logging.getLogger(__name__)
 
 class EventReporter(pykka.ThreadingActor, CoreListener):
 
-    def __init__(self, config, hipchat_connector):
+    def __init__(self, config, hipchat_connector, next_counter):
         super(EventReporter, self).__init__()
         self.config = config['hipchat']
         self.hipchatConnector = hipchat_connector
+        self.next_counter = next_counter
 
     def on_start(self):
         logger.info('EventReporter started.')
@@ -30,3 +31,4 @@ class EventReporter(pykka.ThreadingActor, CoreListener):
         current_track = tl_track.track
         current_track = "None" if current_track is None else title_dash_artist(current_track)
         self.hipchatConnector.send_notification(current_track)
+        self.next_counter.reset()
