@@ -36,7 +36,7 @@ class RequestListener(CommandListener):
             add = [source.tracks[0]]
             self.core.tracklist.add(tracks=add,
                                     at_position=current_track_position + 1)
-            return '{} will be played next'.format(title_dash_artist(source.tracks[0]))
+            return 'Coming next {}'.format(title_dash_artist(source.tracks[0]))
 
     def usage(self):
         return '/request song_name - Request a new song to be played'
