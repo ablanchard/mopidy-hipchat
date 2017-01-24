@@ -27,7 +27,8 @@ class StartListener(CommandListener):
             return 'Already started'
 
         playlists = self.core.playlists.as_list().get()
-        uri = self.find_default_playlist(playlists)
+        query = self.config['default_playlist'] if msg['body'][7:] == "" else msg['body'][7:]
+        uri = self.find_playlist(playlists, query)
         self.core.tracklist.add(uri=uri)
         self.core.tracklist.shuffle()
         self.core.playback.play()
@@ -37,7 +38,7 @@ class StartListener(CommandListener):
     def usage(self):
         return '/start - Start the radio broadcast'
 
-    def find_default_playlist(self,playlists):
+    def find_playlist(self, playlists, query):
         for playlist in playlists:
-            if playlist.name == self.config['default_playlist']:
+            if playlist.name == query:
                 return playlist.uri

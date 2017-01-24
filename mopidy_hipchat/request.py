@@ -22,7 +22,15 @@ class RequestListener(CommandListener):
         return '/request'
 
     def action(self, msg):
-        query = {'any': msg['body'][8:].strip().split(' ')}
+        split = msg['body'][8:].strip().split('-')
+
+        if len(split) == 1:
+            query = {'any': split[0].strip().split(' ')}
+        else:
+            query = {'track_name': split[0].strip().split(' '),
+                     'artist': split[1].strip().split(' ')}
+
+        logger.info(query)
         results = self.core.library.search(query).get()
         logger.info(str(results))
         source = self.find_best_source(results)
@@ -39,7 +47,7 @@ class RequestListener(CommandListener):
             return 'Coming next {}'.format(title_dash_artist(source.tracks[0]))
 
     def usage(self):
-        return '/request song_name - Request a new song to be played'
+        return '/request song_name [- artist_name] - Request a new song to be played'
 
     def find_best_source(self,sources):
         sources_by_uri = {}
