@@ -6,35 +6,33 @@ import time
 from mopidy.core import CoreListener
 
 import pykka
-from lol import log_dict
 from threading import Timer
 
-
-from listener import CommandListener
+from . import listener
 
 
 logger = logging.getLogger(__name__)
 
-class NextListener(CommandListener):
+class NextListener(listener.CommandListener):
 
     def __init__(self,core,counter):
         self.core = core
         self.counter = counter
 
     def command(self):
-        return '/next'
+        return 'next'
 
-    def action(self, msg):
+    def action(self, msg, user):
         if len(self.counter.nexts) == 0:
             Timer(15.0,self.change_song).start()
-            self.counter.add_next(msg['mucnick'])
+            self.counter.add_next(user)
             return 'In 10 seconds song will be next'
 
-        self.counter.add_next(msg['mucnick'])
+        self.counter.add_next(user)
         return 'Currently {} nexts and {} keeps'.format(len(self.counter.nexts),len(self.counter.keeps))
 
     def usage(self):
-        return '/next - Ask to skip the current playing song'
+        return 'next - Ask to skip the current playing song'
 
     def change_song(self):
         if len(self.counter.nexts) > len(self.counter.keeps):

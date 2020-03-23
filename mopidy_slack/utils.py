@@ -10,5 +10,5 @@ def log_dict(dict):
 def title_dash_artist(track):
     if len(track.artists) < 1:
         return track.name
-    return track.name + " - " + iter(track.artists).next().name
+    return track.name + " - " + next(iter(track.artists)).name
 

@@ -7,7 +7,7 @@ class CommandListener():
         pass
 
     @abstractmethod
-    def action(self, msg):
+    def action(self, msg, user):
         pass
 
     @abstractmethod

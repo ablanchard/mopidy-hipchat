@@ -3,26 +3,26 @@ import json
 import logging
 import time
 
-from lol import title_dash_artist
+from . import utils
 
 
 
-from listener import CommandListener
+from . import listener
 
 
 logger = logging.getLogger(__name__)
 
-class RequestListener(CommandListener):
+class RequestListener(listener.CommandListener):
 
     def __init__(self,core,config):
         self.core = core
         self.config = config
 
     def command(self):
-        return '/request'
+        return 'request'
 
-    def action(self, msg):
-        split = msg['body'][8:].strip().split('-')
+    def action(self, msg, user):
+        split = msg[8:].strip().split('-')
 
         if len(split) == 1:
             query = {'any': split[0].strip().split(' ')}
@@ -33,23 +33,24 @@ class RequestListener(CommandListener):
         logger.info(query)
         results = self.core.library.search(query).get()
         logger.info(str(results))
-        source = self.find_best_source(results)
+        #source = self.find_best_source(results)
+        source = results[0]
         logger.info('{} results matching query {} and uri {}'.format(len(source.tracks), query, source.uri))
         if len(source.tracks) <= 0:
             return 'Nothing match your query :('
         else:
+            next_track = source.tracks[0]
             current_track_position = self.core.tracklist.index().get()
             current_track_position = -1 if current_track_position is None else current_track_position
             logger.info('current position {}'.format(current_track_position))
-            add = [source.tracks[0]]
-            self.core.tracklist.add(tracks=add,
+            self.core.tracklist.add(tracks=[next_track],
                                     at_position=current_track_position + 1)
-            return 'Coming next {}'.format(title_dash_artist(source.tracks[0]))
+            return 'Coming next {}'.format(utils.title_dash_artist(next_track))
 
     def usage(self):
-        return '/request song_name [- artist_name] - Request a new song to be played'
+        return 'request song_name [- artist_name] - Request a new song to be played'
 
-    def find_best_source(self,sources):
+    def find_best_source(self, sources):
         sources_by_uri = {}
         for source in sources:
             sources_by_uri[source.uri] = source

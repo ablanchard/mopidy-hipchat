@@ -1,4 +1,1 @@
-coverage
-mock
-nose
-mopidy==dev
+slackclient>=2.0.0
